@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.3.10
+    container_name: mariadb-personapp
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pass123
+      MYSQL_DATABASE: persona_db
+      MYSQL_USER: persona_db
+      MYSQL_PASSWORD: pass123
+    volumes:
+      - ./scripts/persona_ddl_maria.sql:/docker-entrypoint-initdb.d/ppersona_ddl_maria.sql
+      - ./scripts/persona_dml_maria.sql:/docker-entrypoint-initdb.d/ppersona_dml_maria.sql
+    restart: always
+
+  mongodb:
+    image: mongo:6
+    container_name: mongodb-personapp
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./scripts/persona_ddl_mongo.js:/docker-entrypoint-initdb.d/persona_ddl_mongo.js
+      - ./scripts/persona_dml_mongo.js:/docker-entrypoint-initdb.d/persona_dml_mongo.js
+    restart: unless-stopped
