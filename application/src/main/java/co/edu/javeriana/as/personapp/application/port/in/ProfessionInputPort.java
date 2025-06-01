@@ -10,20 +10,14 @@ import co.edu.javeriana.as.personapp.domain.Study;
 
 @Port
 public interface ProfessionInputPort {
-
-    public void setPersintence(ProfessionOutputPort ProfessionOutputPortPersintence);
-
-    public Profession create(Profession profession);
-
-    public Profession edit(Integer identification, Profession profession) throws NoExistException;
-
-    public Boolean drop(Integer identification) throws NoExistException;
-
-    public List<Profession> findAll();
-
-    public Profession findOne(Integer identification) throws NoExistException;
-
-    public Integer count();
-
-    public List<Study> getStudies(Integer identification) throws NoExistException;
+	
+	public void setPersintence(ProfessionOutputPort professionPersintence);
+	
+	public Profession create(Profession profession);
+	public Profession edit(Integer identification, Profession profession) throws NoExistException;
+	public Boolean drop(Integer identification) throws NoExistException;
+	public List<Profession> findAll();
+	public Profession findOne(Integer identification) throws NoExistException;
+	public Integer count();
+	public List<Study> getStudies(Integer identification) throws NoExistException;
 }

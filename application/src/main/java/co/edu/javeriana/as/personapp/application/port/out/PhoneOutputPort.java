@@ -7,12 +7,9 @@ import co.edu.javeriana.as.personapp.domain.Phone;
 
 @Port
 public interface PhoneOutputPort {
-
-    public Phone save(Phone phone);
-
-    public Boolean delete(String number);
-
-    public List<Phone> find();
-
-    public Phone findByNumberPhone(String number);
+	public Phone save(Phone phone);
+	public Boolean delete(String number);
+	public List<Phone> find();
+	public Phone findById(String number);
+	public List<Phone> findByOwnerId(Integer ownerIdentification);
 }

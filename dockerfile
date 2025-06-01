@@ -26,4 +26,6 @@ FROM amazoncorretto:11.0.27-alpine3.21 AS deploy
 
 WORKDIR /app
 COPY --from=build /app/rest-input-adapter/target/rest-input-adapter-0.0.1-SNAPSHOT.jar /app/laboratorio2-rest.jar
-CMD ["java","-cp", "/app/laboratorio2-rest.jar", "co.edu.javeriana.as.personapp.PersonAppRestApi"]
+
+CMD ["java", "-jar", "/app/laboratorio2-rest.jar"]
+#CMD ["java","-cp", "/app/laboratorio2-rest.jar", "co.edu.javeriana.as.personapp.PersonAppRestApi"]

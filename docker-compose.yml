@@ -31,10 +31,14 @@ services:
     build: .
     ports: 
       - "3000:3000"
-    links:
-      - mariadb
-      - mongodb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://mariadb:3306/persona_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=pass123
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/persona_db
     depends_on:
       - mariadb
       - mongodb
+    # Añadir un delay antes de iniciar la aplicación
+    command: sh -c "sleep 30 && java -jar /app/laboratorio2-rest.jar"
 

@@ -7,12 +7,10 @@ import co.edu.javeriana.as.personapp.domain.Study;
 
 @Port
 public interface StudyOutputPort {
-
-    public Study save(Study study);
-
-    public Boolean delete(Integer personIdentification, Integer professionIdentification);
-
-    public List<Study> find();
-
-    public Study findById(Integer personIdentification, Integer professionIdentification);
+	public Study save(Study study);
+	public Boolean delete(Integer personId, Integer professionId);
+	public List<Study> find();
+	public Study findById(Integer personId, Integer professionId);
+	public List<Study> findByPersonId(Integer personId);
+	public List<Study> findByProfessionId(Integer professionId);
 }

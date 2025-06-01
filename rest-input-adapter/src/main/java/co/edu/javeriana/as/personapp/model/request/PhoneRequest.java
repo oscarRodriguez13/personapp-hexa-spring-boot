@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonaRequest {
-	private String dni;
-	private String firstName;
-	private String lastName;
-	private String age;
-	private String gender;
-	private String database;
+public class PhoneRequest {
+    private String number;
+    private String operator;
+    private Integer ownerCc;
+    private String database; // para seleccionar entre MARIA o MONGO
 }

@@ -7,12 +7,8 @@ import co.edu.javeriana.as.personapp.domain.Profession;
 
 @Port
 public interface ProfessionOutputPort {
-
-    public Profession save(Profession profession);
-
-    public Boolean delete(String number);
-
-    public List<Profession> find();
-
-    public Profession findByNumberPhone(String number);
+	public Profession save(Profession profession);
+	public Boolean delete(Integer identification);
+	public List<Profession> find();
+	public Profession findById(Integer identification);
 }

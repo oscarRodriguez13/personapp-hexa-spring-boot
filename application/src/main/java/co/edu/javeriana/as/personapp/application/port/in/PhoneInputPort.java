@@ -9,18 +9,14 @@ import co.edu.javeriana.as.personapp.domain.Phone;
 
 @Port
 public interface PhoneInputPort {
-
-    public void setPersintence(PhoneOutputPort phoneOutputPortPersintence);
-
-    public Phone create(Phone phone);
-
-    public Phone edit(String number, Phone phone) throws NoExistException;
-
-    public Boolean drop(String number) throws NoExistException;
-
-    public List<Phone> findAll();
-
-    public Phone findOne(String number) throws NoExistException;
-
-    public Integer count();
+	
+	public void setPersintence(PhoneOutputPort phonePersintence);
+	
+	public Phone create(Phone phone);
+	public Phone edit(String number, Phone phone) throws NoExistException;
+	public Boolean drop(String number) throws NoExistException;
+	public List<Phone> findAll();
+	public Phone findOne(String number) throws NoExistException;
+	public Integer count();
+	public List<Phone> findByOwner(Integer ownerIdentification) throws NoExistException;
 }
