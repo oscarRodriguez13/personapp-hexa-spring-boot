@@ -31,11 +31,13 @@ public class TelefonoMapperMongo {
 		Phone phone = new Phone();
 		phone.setNumber(telefonoDocument.getId());
 		phone.setCompany(telefonoDocument.getOper());
+		// Usar el método con flag para evitar recursión infinita
 		phone.setOwner(validateOwner(telefonoDocument.getPrimaryDuenio()));
 		return phone;
 	}
 
 	private @NonNull Person validateOwner(PersonaDocument duenio) {
-		return duenio != null ? personaMapperMongo.fromAdapterToDomain(duenio) : new Person();
+		// Usar el método sobrecargado con skipPhones=true para evitar recursión
+		return duenio != null ? personaMapperMongo.fromAdapterToDomain(duenio, true) : new Person();
 	}
 }

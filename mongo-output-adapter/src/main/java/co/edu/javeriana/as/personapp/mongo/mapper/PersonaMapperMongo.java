@@ -10,6 +10,7 @@ import co.edu.javeriana.as.personapp.common.annotations.Mapper;
 import co.edu.javeriana.as.personapp.domain.Gender;
 import co.edu.javeriana.as.personapp.domain.Person;
 import co.edu.javeriana.as.personapp.domain.Phone;
+import co.edu.javeriana.as.personapp.domain.Profession;
 import co.edu.javeriana.as.personapp.domain.Study;
 import co.edu.javeriana.as.personapp.mongo.document.EstudiosDocument;
 import co.edu.javeriana.as.personapp.mongo.document.PersonaDocument;
@@ -58,6 +59,11 @@ public class PersonaMapperMongo {
 	}
 
 	public Person fromAdapterToDomain(PersonaDocument personaDocument) {
+		return fromAdapterToDomain(personaDocument, false);
+	}
+
+	// Método sobrecargado con flag para controlar la recursión
+	public Person fromAdapterToDomain(PersonaDocument personaDocument, boolean skipPhones) {
 		Person person = new Person();
 		person.setIdentification(personaDocument.getId());
 		person.setFirstName(personaDocument.getNombre());
@@ -65,7 +71,14 @@ public class PersonaMapperMongo {
 		person.setGender(validateGender(personaDocument.getGenero()));
 		person.setAge(validateAge(personaDocument.getEdad()));
 		person.setStudies(validateStudies(personaDocument.getEstudios()));
-		person.setPhoneNumbers(validatePhones(personaDocument.getTelefonos()));
+		
+		// Solo mapear teléfonos si no estamos en una llamada recursiva
+		if (!skipPhones) {
+			person.setPhoneNumbers(validatePhones(personaDocument.getTelefonos()));
+		} else {
+			person.setPhoneNumbers(new ArrayList<Phone>());
+		}
+		
 		return person;
 	}
 
@@ -78,9 +91,31 @@ public class PersonaMapperMongo {
 	}
 
 	private List<Study> validateStudies(List<EstudiosDocument> estudiosDocuments) {
-		return estudiosDocuments != null && !estudiosDocuments.isEmpty() ? estudiosDocuments.stream()
-				.map(estudio -> estudiosMapperMongo.fromAdapterToDomain(estudio)).collect(Collectors.toList())
-				: new ArrayList<Study>();
+		if (estudiosDocuments == null || estudiosDocuments.isEmpty()) {
+			return new ArrayList<Study>();
+		}
+		
+		return estudiosDocuments.stream()
+			.map(estudio -> {
+				// Crear Study básico para evitar recursión
+				Study study = new Study();
+				
+				// Crear Person básico solo con ID
+				Person person = new Person();
+				person.setIdentification(estudio.getPrimaryPersona().getId());
+				study.setPerson(person);
+				
+				// Crear Profession básico solo con ID
+				Profession profession = new Profession();
+				profession.setIdentification(estudio.getPrimaryProfesion().getId());
+				study.setProfession(profession);
+				
+				study.setGraduationDate(estudio.getFecha());
+				study.setUniversityName(estudio.getUniver());
+				
+				return study;
+			})
+			.collect(Collectors.toList());
 	}
 
 	private List<Phone> validatePhones(List<TelefonoDocument> telefonosDocuments) {
