@@ -3,11 +3,11 @@ package co.edu.javeriana.as.personapp.terminal.menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
-import co.edu.javeriana.as.personapp.terminal.adapter.TelefonoInputAdapterCli;
+import co.edu.javeriana.as.personapp.terminal.adapter.EstudioInputAdapterCli;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TelefonoMenu {
+public class EstudioMenu {
     
     // Constantes para navegación
     private static final int OPCION_REGRESAR_MODULOS = 0;
@@ -21,8 +21,9 @@ public class TelefonoMenu {
     private static final int OPCION_EDITAR = 3;
     private static final int OPCION_ELIMINAR = 4;
     private static final int OPCION_BUSCAR = 5;
+    private static final int OPCION_CONTAR = 6;
     
-    public void iniciarMenu(TelefonoInputAdapterCli phoneInputAdapterCli, Scanner keyboard) {
+    public void iniciarMenu(EstudioInputAdapterCli studyInputAdapterCli, Scanner keyboard) {
         boolean continuar = true;
         
         while (continuar) {
@@ -35,12 +36,12 @@ public class TelefonoMenu {
                         continuar = false;
                         break;
                     case PERSISTENCIA_MARIADB:
-                        phoneInputAdapterCli.setPhoneOutputPortInjection("MARIA");
-                        menuOpciones(phoneInputAdapterCli, keyboard);
+                        studyInputAdapterCli.setStudyOutputPortInjection("MARIA");
+                        menuOpciones(studyInputAdapterCli, keyboard);
                         break;
                     case PERSISTENCIA_MONGODB:
-                        phoneInputAdapterCli.setPhoneOutputPortInjection("MONGO");
-                        menuOpciones(phoneInputAdapterCli, keyboard);
+                        studyInputAdapterCli.setStudyOutputPortInjection("MONGO");
+                        menuOpciones(studyInputAdapterCli, keyboard);
                         break;
                     default:
                         System.out.println("Opción no válida. Seleccione una opción del menú.");
@@ -51,7 +52,7 @@ public class TelefonoMenu {
         }
     }
     
-    private void menuOpciones(TelefonoInputAdapterCli phoneInputAdapterCli, Scanner keyboard) {
+    private void menuOpciones(EstudioInputAdapterCli studyInputAdapterCli, Scanner keyboard) {
         boolean continuar = true;
         
         while (continuar) {
@@ -64,19 +65,22 @@ public class TelefonoMenu {
                         continuar = false;
                         break;
                     case OPCION_VER_TODOS:
-                        phoneInputAdapterCli.historial();
+                        studyInputAdapterCli.historial();
                         break;
                     case OPCION_CREAR:
-                        phoneInputAdapterCli.crear(keyboard);
+                        studyInputAdapterCli.crear(keyboard);
                         break;
                     case OPCION_EDITAR:
-                        phoneInputAdapterCli.editar(keyboard);
+                        studyInputAdapterCli.editar(keyboard);
                         break;
                     case OPCION_ELIMINAR:
-                        phoneInputAdapterCli.eliminar(keyboard);
+                        studyInputAdapterCli.eliminar(keyboard);
                         break;
                     case OPCION_BUSCAR:
-                        phoneInputAdapterCli.buscar(keyboard);
+                        studyInputAdapterCli.buscar(keyboard);
+                        break;
+                    case OPCION_CONTAR:
+                        studyInputAdapterCli.contar();
                         break;
                     default:
                         System.out.println("Opción no válida. Seleccione una opción del menú.");
@@ -91,7 +95,7 @@ public class TelefonoMenu {
     private void mostrarMenuMotorPersistencia() {
         System.out.println();
         System.out.println("═══════════════════════════════════════");
-        System.out.println("       MÓDULO DE TELÉFONOS             ");
+        System.out.println("        MÓDULO DE ESTUDIOS             ");
         System.out.println("═══════════════════════════════════════");
         System.out.println("Seleccione el motor de persistencia:");
         System.out.println();
@@ -104,13 +108,14 @@ public class TelefonoMenu {
     private void mostrarMenuOpciones() {
         System.out.println();
         System.out.println("═══════════════════════════════════════");
-        System.out.println("      OPERACIONES DE TELÉFONOS         ");
+        System.out.println("       OPERACIONES DE ESTUDIOS         ");
         System.out.println("═══════════════════════════════════════");
-        System.out.println(" " + OPCION_VER_TODOS + ". Ver todos los teléfonos");
-        System.out.println(" " + OPCION_CREAR + ". Crear nuevo teléfono");
-        System.out.println(" " + OPCION_EDITAR + ". Editar teléfono existente");
-        System.out.println(" " + OPCION_ELIMINAR + ". Eliminar teléfono");
-        System.out.println(" " + OPCION_BUSCAR + ". Buscar teléfono específico");
+        System.out.println(" " + OPCION_VER_TODOS + ". Ver todos los estudios");
+        System.out.println(" " + OPCION_CREAR + ". Crear nuevo estudio");
+        System.out.println(" " + OPCION_EDITAR + ". Editar estudio existente");
+        System.out.println(" " + OPCION_ELIMINAR + ". Eliminar estudio");
+        System.out.println(" " + OPCION_BUSCAR + ". Buscar estudio específico");
+        System.out.println(" " + OPCION_CONTAR + ". Contar total de estudios");
         System.out.println(" " + OPCION_REGRESAR_MOTOR_PERSISTENCIA + ". Regresar a selección de BD");
         System.out.println("═══════════════════════════════════════");
     }

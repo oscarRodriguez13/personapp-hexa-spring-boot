@@ -3,11 +3,11 @@ package co.edu.javeriana.as.personapp.terminal.menu;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import co.edu.javeriana.as.personapp.common.exceptions.InvalidOptionException;
-import co.edu.javeriana.as.personapp.terminal.adapter.TelefonoInputAdapterCli;
+import co.edu.javeriana.as.personapp.terminal.adapter.ProfesionInputAdapterCli;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TelefonoMenu {
+public class ProfesionMenu {
     
     // Constantes para navegación
     private static final int OPCION_REGRESAR_MODULOS = 0;
@@ -16,13 +16,15 @@ public class TelefonoMenu {
     
     // Constantes para operaciones CRUD
     private static final int OPCION_REGRESAR_MOTOR_PERSISTENCIA = 0;
-    private static final int OPCION_VER_TODOS = 1;
+    private static final int OPCION_VER_TODAS = 1;
     private static final int OPCION_CREAR = 2;
     private static final int OPCION_EDITAR = 3;
     private static final int OPCION_ELIMINAR = 4;
     private static final int OPCION_BUSCAR = 5;
+    private static final int OPCION_CONTAR = 6;
+    private static final int OPCION_VER_ESTUDIOS = 7;
     
-    public void iniciarMenu(TelefonoInputAdapterCli phoneInputAdapterCli, Scanner keyboard) {
+    public void iniciarMenu(ProfesionInputAdapterCli professionInputAdapterCli, Scanner keyboard) {
         boolean continuar = true;
         
         while (continuar) {
@@ -35,12 +37,12 @@ public class TelefonoMenu {
                         continuar = false;
                         break;
                     case PERSISTENCIA_MARIADB:
-                        phoneInputAdapterCli.setPhoneOutputPortInjection("MARIA");
-                        menuOpciones(phoneInputAdapterCli, keyboard);
+                        professionInputAdapterCli.setProfessionOutputPortInjection("MARIA");
+                        menuOpciones(professionInputAdapterCli, keyboard);
                         break;
                     case PERSISTENCIA_MONGODB:
-                        phoneInputAdapterCli.setPhoneOutputPortInjection("MONGO");
-                        menuOpciones(phoneInputAdapterCli, keyboard);
+                        professionInputAdapterCli.setProfessionOutputPortInjection("MONGO");
+                        menuOpciones(professionInputAdapterCli, keyboard);
                         break;
                     default:
                         System.out.println("Opción no válida. Seleccione una opción del menú.");
@@ -51,7 +53,7 @@ public class TelefonoMenu {
         }
     }
     
-    private void menuOpciones(TelefonoInputAdapterCli phoneInputAdapterCli, Scanner keyboard) {
+    private void menuOpciones(ProfesionInputAdapterCli professionInputAdapterCli, Scanner keyboard) {
         boolean continuar = true;
         
         while (continuar) {
@@ -63,20 +65,26 @@ public class TelefonoMenu {
                     case OPCION_REGRESAR_MOTOR_PERSISTENCIA:
                         continuar = false;
                         break;
-                    case OPCION_VER_TODOS:
-                        phoneInputAdapterCli.historial();
+                    case OPCION_VER_TODAS:
+                        professionInputAdapterCli.historial();
                         break;
                     case OPCION_CREAR:
-                        phoneInputAdapterCli.crear(keyboard);
+                        professionInputAdapterCli.crear(keyboard);
                         break;
                     case OPCION_EDITAR:
-                        phoneInputAdapterCli.editar(keyboard);
+                        professionInputAdapterCli.editar(keyboard);
                         break;
                     case OPCION_ELIMINAR:
-                        phoneInputAdapterCli.eliminar(keyboard);
+                        professionInputAdapterCli.eliminar(keyboard);
                         break;
                     case OPCION_BUSCAR:
-                        phoneInputAdapterCli.buscar(keyboard);
+                        professionInputAdapterCli.buscar(keyboard);
+                        break;
+                    case OPCION_CONTAR:
+                        professionInputAdapterCli.contar();
+                        break;
+                    case OPCION_VER_ESTUDIOS:
+                        professionInputAdapterCli.verEstudios(keyboard);
                         break;
                     default:
                         System.out.println("Opción no válida. Seleccione una opción del menú.");
@@ -91,7 +99,7 @@ public class TelefonoMenu {
     private void mostrarMenuMotorPersistencia() {
         System.out.println();
         System.out.println("═══════════════════════════════════════");
-        System.out.println("       MÓDULO DE TELÉFONOS             ");
+        System.out.println("       MÓDULO DE PROFESIONES           ");
         System.out.println("═══════════════════════════════════════");
         System.out.println("Seleccione el motor de persistencia:");
         System.out.println();
@@ -104,13 +112,15 @@ public class TelefonoMenu {
     private void mostrarMenuOpciones() {
         System.out.println();
         System.out.println("═══════════════════════════════════════");
-        System.out.println("      OPERACIONES DE TELÉFONOS         ");
+        System.out.println("     OPERACIONES DE PROFESIONES        ");
         System.out.println("═══════════════════════════════════════");
-        System.out.println(" " + OPCION_VER_TODOS + ". Ver todos los teléfonos");
-        System.out.println(" " + OPCION_CREAR + ". Crear nuevo teléfono");
-        System.out.println(" " + OPCION_EDITAR + ". Editar teléfono existente");
-        System.out.println(" " + OPCION_ELIMINAR + ". Eliminar teléfono");
-        System.out.println(" " + OPCION_BUSCAR + ". Buscar teléfono específico");
+        System.out.println(" " + OPCION_VER_TODAS + ". Ver todas las profesiones");
+        System.out.println(" " + OPCION_CREAR + ". Crear nueva profesión");
+        System.out.println(" " + OPCION_EDITAR + ". Editar profesión existente");
+        System.out.println(" " + OPCION_ELIMINAR + ". Eliminar profesión");
+        System.out.println(" " + OPCION_BUSCAR + ". Buscar profesión específica");
+        System.out.println(" " + OPCION_CONTAR + ". Contar total de profesiones");
+        System.out.println(" " + OPCION_VER_ESTUDIOS + ". Ver estudios por profesión");
         System.out.println(" " + OPCION_REGRESAR_MOTOR_PERSISTENCIA + ". Regresar a selección de BD");
         System.out.println("═══════════════════════════════════════");
     }
