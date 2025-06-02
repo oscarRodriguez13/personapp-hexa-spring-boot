@@ -10,6 +10,16 @@ Los desarrolladores de este sistema son:
 
 ---
 
+## 💡 Stack tecnológico
+
+- Java JDK 11
+- SpringBoot
+- Docker
+- REST
+- CLI
+- MongoDB
+- MariaBD
+
 ## 📦 Características principales
 
 - Arquitectura hexagonal desacoplada (Domain, Application, Ports, Adapters)
