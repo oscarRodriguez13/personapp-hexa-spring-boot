@@ -49,6 +49,7 @@ public class PersonaInputAdapterCli {
 					.collect(Collectors.toList());
 		persona.forEach(p -> System.out.println(p.toString()));
 	}
+	
 	public void historial() {
 	    log.info("Into historial PersonaEntity in Input Adapter");
 	    personInputPort.findAll().stream()

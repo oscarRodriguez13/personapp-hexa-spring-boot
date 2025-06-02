@@ -1,12 +1,11 @@
 package co.edu.javeriana.as.personapp.terminal.menu;
 
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import co.edu.javeriana.as.personapp.terminal.adapter.PersonaInputAdapterCli;
+import co.edu.javeriana.as.personapp.terminal.adapter.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -17,6 +16,9 @@ public class MenuPrincipal {
 	@Autowired
 	private PersonaInputAdapterCli personaInputAdapterCli;
 
+	@Autowired
+	private TelefonoInputAdapterCli telefonoInputAdapterCli;
+
 	private static final int SALIR = 0;
 	private static final int MODULO_PERSONA = 1;
 	private static final int MODULO_PROFESION = 2;
@@ -25,10 +27,12 @@ public class MenuPrincipal {
 
 	//Menus
 	private final PersonaMenu personaMenu;
+	private final TelefonoMenu telefonoMenu;
 	private final Scanner keyboard;
 
     public MenuPrincipal() {
         this.personaMenu = new PersonaMenu();
+		this.telefonoMenu = new TelefonoMenu();
         this.keyboard = new Scanner(System.in);
     }
 
@@ -38,7 +42,7 @@ public class MenuPrincipal {
 		boolean isValid = false;
 		do {
 			mostrarMenu();
-			int opcion = leerOpcion();
+			int opcion = leerOpcion(keyboard);
 			switch (opcion) {
 			case SALIR:
 				isValid = true;
@@ -51,6 +55,7 @@ public class MenuPrincipal {
 				log.warn("Implementar Menu");
 				break;
 			case MODULO_TELEFONO:
+				telefonoMenu.iniciarMenu(telefonoInputAdapterCli, keyboard);
 				log.warn("Implementar Menu");
 				break;
 			case MODULO_ESTUDIO:
@@ -61,7 +66,7 @@ public class MenuPrincipal {
 			}
 
 		} while (!isValid);
-		keyboard.close();
+		//keyboard.close();
 	}
 
 	private void mostrarMenu() {
@@ -73,14 +78,20 @@ public class MenuPrincipal {
 		System.out.println(SALIR + " para Salir");
 	}
 
-	private int leerOpcion() {
+	private int leerOpcion(Scanner keyboard) {
 		try {
 			System.out.print("Ingrese una opción: ");
 			return keyboard.nextInt();
 		} catch (InputMismatchException e) {
 			log.warn("Solo se permiten números.");
-			return leerOpcion();
+			keyboard.nextLine(); // limpiar buffer
+			return -1; // opción inválida
+		} catch (NoSuchElementException e) {
+			log.error("No hay más entrada disponible. Terminando aplicación...");
+			System.exit(1); // o lanza una excepción si prefieres
+			return -1;
 		}
 	}
+
 
 }
